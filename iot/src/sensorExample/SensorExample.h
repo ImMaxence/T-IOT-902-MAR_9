@@ -2,8 +2,9 @@
 
 using namespace std;
 
-class SensorExample {
-    public: 
+class SensorExample
+{
+public:
     SensorExample();
     void readSensor();
 };

@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#ifndef SENSORDATA_H // Si SENSORDATA_H n'a pas encore été défini
+#ifndef SENSORDATA_H
 #define SENSORDATA_H
 
 struct SensorData
@@ -11,4 +11,4 @@ struct SensorData
     long timestamp;
 };
 
-#endif // SENSORDATA_H
+#endif
