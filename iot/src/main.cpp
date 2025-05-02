@@ -7,20 +7,6 @@ LoRaTransmitter loRaTransmitter;
 JsonFormatter jsonFormatter;
 SensorExample sensorExample;
 
-SensorData data = {
-  name : "température",
-  value : 1531.3,
-  unit : "°C",
-  timestamp : 123456
-};
-
-SensorData data2 = {
-  name : "oussière",
-  value : 11.3,
-  unit : "m²",
-  timestamp : 12365456
-};
-
 void setup()
 {
   Serial.begin(115200);
