@@ -5,20 +5,20 @@
 
 using namespace std;
 
-class LoRaTransmitter {
-    public: 
+class LoRaTransmitter
+{
+public:
     LoRaTransmitter();
-    bool begin(int sendInterval);
+    bool begin(unsigned long sendInterval);
     bool canSendMessage();
     bool sendMessage();
-    void addData(SensorData& data);
-    
-    private:
+    void addData(SensorData &data);
+
+private:
     unsigned long lastSendTime;
     unsigned long sendInterval;
     JsonFormatter jsonFormatter;
     vector<SensorData> dataArray;
 
     String buildMessage();
-
 };

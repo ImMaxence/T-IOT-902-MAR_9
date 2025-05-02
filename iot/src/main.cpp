@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include "./lora/LoRaTransmitter.h"
+#include "./sensorExample/SensorExample.h"
 #include "SensorData.h"
 
 LoRaTransmitter loRaTransmitter;
 JsonFormatter jsonFormatter;
+SensorExample sensorExample;
 
 SensorData data = {
   name : "température",
@@ -22,15 +24,13 @@ SensorData data2 = {
 void setup()
 {
   Serial.begin(115200);
-  loRaTransmitter.begin(1000);
+  loRaTransmitter.begin(3000);
 }
 
 void loop()
 {
   delay(1000);
-  loRaTransmitter.addData(data);
-  loRaTransmitter.addData(data2);
-
+  sensorExample.readSensor();
   if (loRaTransmitter.canSendMessage())
   {
     loRaTransmitter.sendMessage();
