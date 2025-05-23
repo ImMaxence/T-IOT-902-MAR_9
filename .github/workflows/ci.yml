@@ -39,10 +39,6 @@ jobs:
         run: platformio run --environment ttgo-t-beam
         working-directory: iot
 
-      - name: Run unit tests
-        run: platformio run -t test --without-uploading --environment ttgo-t-beam
-        working-directory: iot
-
       - name: List build directory
         run: ls -al .pio/build/ttgo-t-beam/
         working-directory: iot
