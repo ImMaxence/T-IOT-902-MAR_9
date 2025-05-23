@@ -40,7 +40,7 @@ jobs:
         working-directory: iot
 
       - name: Run unit tests
-        run: platformio test --without-uploading --environment ttgo-t-beam
+        run: platformio run -t test --without-uploading --environment ttgo-t-beam
         working-directory: iot
 
       - name: List build directory
