@@ -1,34 +1,48 @@
-name: C++ CI
+name: PlatformIO CI for TTGO T-Beam
 
 on:
   push:
     branches: 
-    - feature/*
+      - feature/*
   pull_request:
     branches: 
-    - main 
-    - develop
+      - main 
+      - develop
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y build-essential cmake
+      - name: Cache PlatformIO
+        uses: actions/cache@v3
+        with:
+          path: ~/.platformio
+          key: ${{ runner.os }}-platformio-${{ hashFiles('**/platformio.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-platformio-
 
-    - name: Build project
-      run: |
-        mkdir -p build
-        cd build
-        cmake ..
-        make
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
 
-    - name: Run tests
-      run: |
-        cd build
-        ctest --output-on-failure
+      - name: Install PlatformIO
+        run: |
+          python -m pip install --upgrade pip
+          pip install platformio
+
+      - name: Build firmware
+        run: platformio run --environment ttgo-t-beam
+
+      - name: Run unit tests
+        run: platformio test --environment ttgo-t-beam
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: firmware
+          path: .pio/build/ttgo-t-beam/firmware.bin
