@@ -4,7 +4,8 @@
 
 void test_json_parse_example() {
     const char* json = "{\"key\":\"value\"}";
-    DynamicJsonDocument doc(1024);
+    StaticJsonDocument<1024> doc;
+
     DeserializationError err = deserializeJson(doc, json);
     TEST_ASSERT_FALSE(err);
     TEST_ASSERT_EQUAL_STRING("value", doc["key"]);
