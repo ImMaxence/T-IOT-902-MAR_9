@@ -40,8 +40,15 @@ jobs:
       - name: Run unit tests
         run: platformio test --environment ttgo-t-beam
 
+      - name: List build directory
+        run: ls -al .pio/build/ttgo-t-beam/
+      
       - name: Upload firmware
-        uses: actions/upload-artifact@v3.1.3
+        if: success() && hashFiles('.pio/build/ttgo-t-beam/firmware.bin') != ''
+        uses: actions/upload-artifact@v3
         with:
           name: firmware
           path: .pio/build/ttgo-t-beam/firmware.bin
+
+
+      
