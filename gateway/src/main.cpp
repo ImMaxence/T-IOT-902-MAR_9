@@ -21,5 +21,5 @@ void setup() {
 
 void loop() {
     receiver.receive();
-    delay(100); // Petite pause pour éviter de surcharger le CPU
+    delay(100);
 }
