@@ -7,9 +7,9 @@ LoRaTransmitter::LoRaTransmitter()
 
 bool LoRaTransmitter::begin(unsigned long delayBetweenMessages)
 {
-    LoRa.setPins(18, 14, 26);
+    LoRa.setPins(csPin, resetPin, irqPin);
 
-    if (!LoRa.begin(868E6))
+    if (!LoRa.begin(frequency))
     {
         Serial.println("LoRa initialization failed");
         return false;
@@ -47,12 +47,15 @@ bool LoRaTransmitter::sendMessage()
     String fullMessage = buildMessage();
 
     LoRa.beginPacket();
-    bool hasSucceeded = LoRa.endPacket() ? true : false;
+    LoRa.print(fullMessage);
+    bool hasSucceeded = LoRa.endPacket();
 
     lastSendTime = millis();
     dataArray.clear();
-
-    Serial.println("sending " + fullMessage);
+    Serial.println("-------------------");
+    Serial.println("Sending: ");
+    Serial.println(fullMessage);
+    Serial.println("-------------------");
 
     return hasSucceeded;
 }

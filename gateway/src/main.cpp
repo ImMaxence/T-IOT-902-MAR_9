@@ -1,18 +1,25 @@
 #include <Arduino.h>
+#include "./loRaReceiver/LoRaReceiver.h"
 
-// put function declarations here:
-int myFunction(int, int);
+LoRaReceiver receiver;
 
 void setup() {
-  Serial.begin(115200);
+    Serial.begin(115200);
+    delay(2000);
+    
+    Serial.println("=== DÉMARRAGE DU RÉCEPTEUR LORA ===");
+    
+    if (!receiver.begin()) {
+        Serial.println("Échec de l'initialisation du récepteur LoRa!");
+        while (1) {
+            delay(1000);
+        }
+    }
+    
+    Serial.println("Récepteur prêt, en attente de messages...\n");
 }
 
 void loop() {
-  Serial.println("Started");
-  sleep(3000);
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    receiver.receive();
+    delay(100); // Petite pause pour éviter de surcharger le CPU
 }
