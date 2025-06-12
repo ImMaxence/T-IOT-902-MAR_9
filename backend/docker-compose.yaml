@@ -1,8 +1,24 @@
 services:
 
+  backend:
+    build: .
+    container_name: backend-sensor-sensei
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:13
-    container_name: database-skilljourney
+    container_name: database-sensor-sensei
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -10,7 +26,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - sensor_sensei_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+  sensor_sensei_data:
