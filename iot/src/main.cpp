@@ -19,6 +19,6 @@ void loop()
   sensorExample.readSensor();
   if (loRaTransmitter.canSendMessage())
   {
-    loRaTransmitter.sendMessage();
+    Serial.println(loRaTransmitter.sendMessage() ? "message envoyé" : "error");
   }
 }

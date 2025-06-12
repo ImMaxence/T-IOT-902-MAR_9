@@ -15,6 +15,10 @@ public:
     void addData(SensorData &data);
 
 private:
+    const int csPin = 18;
+    const int resetPin = 14;
+    const int irqPin = 26;
+    const long frequency = 868E6;
     unsigned long lastSendTime;
     unsigned long sendInterval;
     JsonFormatter jsonFormatter;
