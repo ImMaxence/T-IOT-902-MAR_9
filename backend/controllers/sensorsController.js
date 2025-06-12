@@ -27,14 +27,43 @@ export const getSensorMeasurements = async (req, res) => {
   }
 };
 
+// Envoi direct à Sensor Community (endpoint officiel)
 export const postSensorMeasurements = async (req, res) => {
-  const { id } = req.params;
-  const data = req.body;
-  if (!Array.isArray(data) || !data.every(item => typeof item.name === 'string' && typeof item.value === 'number' && typeof item.unit === 'string' && typeof item.timestamp === 'number')) {
-    return res.status(400).json({ error: 'Format de données invalide.' });
+  // On accepte un body de type :
+  // [
+  //   { name: 'P1', value: 66.04, unit: 'µg/m³', timestamp: 1718190000 },
+  //   ...
+  // ]
+  // et un sensorId (en paramètre d'URL ou dans le body), xPin (dans le body, optionnel)
+  const { id: sensorIdParam } = req.params;
+  const { sensorId: sensorIdBody, xPin = "1" } = req.body;
+  const dataArray = Array.isArray(req.body) ? req.body : req.body.data;
+  const sensorId = sensorIdParam || sensorIdBody || "esp8266-1234567890";
+
+  if (!Array.isArray(dataArray) || !sensorId) {
+    return res.status(400).json({ error: 'Format de données invalide. Attendu : tableau [{ name, value, unit, timestamp }]' });
   }
-  // Sensor Community n'accepte pas de POST public, donc on simule la réussite
-  // Pour un vrai POST, il faudrait une clé API ou endpoint privé, ex :
-  // await axios.post(`https://data.sensor.community/airrohr/v1/sensor/${id}/`, data);
-  return res.status(201).json({ message: 'Données reçues (simulation, Sensor Community n\'accepte pas de POST public)', data });
+
+  // Transformation en format Sensor Community
+  const sensordatavalues = dataArray.map(item => ({
+    value_type: item.name,
+    value: String(item.value)
+  }));
+
+  const URL_ENDPOINT = "https://api.sensor.community/v1/";
+  const headers = {
+    "X-Sensor": sensorId,
+    "X-Pin": xPin,
+    "Content-Type": "application/json"
+  };
+  const data = {
+    software_version: "0.0.1",
+    sensordatavalues
+  };
+  try {
+    const response = await axios.post(URL_ENDPOINT, data, { headers });
+    return res.status(response.status).json({ message: "Data envoyée à Sensor Community", status: response.status });
+  } catch (err) {
+    return res.status(err.response?.status || 500).json({ error: err.response?.data || err.message });
+  }
 };

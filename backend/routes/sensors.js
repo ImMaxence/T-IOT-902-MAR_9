@@ -13,7 +13,7 @@ const router = express.Router();
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: ID du capteur
  *     responses:
  *       200:
@@ -31,7 +31,7 @@ router.get('/:id', getSensorById);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: ID du capteur
  *     responses:
  *       200:
@@ -43,7 +43,7 @@ router.get('/:id', getSensorById);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *         description: ID du capteur
  *     requestBody:
  *       required: true
