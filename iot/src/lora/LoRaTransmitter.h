@@ -5,6 +5,13 @@
 
 using namespace std;
 
+#define CS_PIN 18
+#define IRQ_PIN 14
+#define RESET_PIN 26
+#define FREQUENCY 868E6
+#define ARRAY_SPLIT_CHAR '_'
+#define OBJECT_SPLIT_CHAR '|'
+
 class LoRaTransmitter
 {
 public:
@@ -15,14 +22,11 @@ public:
     void addData(SensorData &data);
 
 private:
-    const int csPin = 18;
-    const int resetPin = 14;
-    const int irqPin = 26;
-    const long frequency = 868E6;
     unsigned long lastSendTime;
     unsigned long sendInterval;
     JsonFormatter jsonFormatter;
     vector<SensorData> dataArray;
 
     String buildMessage();
+    String minifyData(SensorData &data);
 };
