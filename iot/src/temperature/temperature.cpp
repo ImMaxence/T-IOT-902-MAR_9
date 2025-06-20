@@ -42,7 +42,7 @@
 //   Serial.println("------");
 //   delay(2000);
 // }
-
+#include "lora/LoRaInstance.h"
 #include "temperature/temperature.h"
 
 // ✅ Définition réelle ici
@@ -76,9 +76,14 @@ void loopTemperatureSensor() {
   float altitude = bmp.readAltitude(1013.25);
   long timestamp = millis();
 
-  SensorData tempData = {"temperature", temperature, "°C", timestamp};
-  SensorData pressData = {"pressure", pressure, "hPa", timestamp};
-  SensorData altData  = {"altitude", altitude, "m", timestamp};
+  SensorData tempData = {"temperature", temperature, "°C", 0};
+  SensorData pressData = {"pressure", pressure, "hPa", 0};
+  SensorData altData  = {"altitude", altitude, "m", 0};
+
+  // Envoi LoRa
+  loRaTransmitter.addData(tempData);
+  loRaTransmitter.addData(pressData);
+  loRaTransmitter.addData(altData);
 
   printSensorDataTemp(tempData);
   printSensorDataTemp(pressData);
