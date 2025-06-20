@@ -45,7 +45,7 @@
 
 //   delay(1000); // Pause pour éviter de spammer
 // }
-
+#include "lora/LoRaInstance.h"
 #include "gps/gps.h"
 
 TinyGPSPlus gps;
@@ -78,8 +78,11 @@ void loopGPS() {
   if (gps.location.isValid() && gps.location.isUpdated()) {
     Serial.println("\n📍 Position GPS trouvée !");
     long timestamp = millis();
-    SensorData gpsLat = {"latitude", (float)gps.location.lat(), "°", timestamp};
-    SensorData gpsLng = {"longitude", (float)gps.location.lng(), "°", timestamp};
+    SensorData gpsLat = {"latitude", (float)gps.location.lat(), "°", 0};
+    SensorData gpsLng = {"longitude", (float)gps.location.lng(), "°", 0};
+
+    loRaTransmitter.addData(gpsLat);
+    loRaTransmitter.addData(gpsLng);
 
     printSensorDataGps(gpsLat);
     printSensorDataGps(gpsLng);
