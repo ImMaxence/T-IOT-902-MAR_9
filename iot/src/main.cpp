@@ -3,12 +3,13 @@
 #include "./lora/LoRaTransmitter.h"
 #include "./sensorExample/SensorExample.h"
 #include "SensorData.h"
-#include "temperature/temperature.h"
-#include "gps/gps.h"
+#include "temperatureSensor/temperatureSensor.h"
+#include "gpsSensor/gpsSensor.h"
 
 LoRaTransmitter loRaTransmitter;
-JsonFormatter jsonFormatter;
-SensorExample sensorExample;
+
+GPSSensor gpsSensor;
+TemperatureSensor temperatureSensor;
 
 void setup()
 {
@@ -18,18 +19,17 @@ void setup()
   Serial.println("▶ setup démarré");
 
   // loRaTransmitter.begin(3000);
-  setupGPS();
-  // setupTemperatureSensor();
+  gpsSensor.setup();
+  temperatureSensor.setup();
 }
 
 void loop()
 {
-  loopGPS();
-  // loopTemperatureSensor();
-  // delay(1000);
-  // sensorExample.readSensor();
+  temperatureSensor.readSensorData();
+  gpsSensor.readSensorData();
   // if (loRaTransmitter.canSendMessage())
   // {
   //   Serial.println(loRaTransmitter.sendMessage() ? "message envoyé" : "error");
   // }
+  delay(1000);
 }
