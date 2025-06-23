@@ -7,9 +7,9 @@ LoRaTransmitter::LoRaTransmitter()
 
 bool LoRaTransmitter::begin(unsigned long delayBetweenMessages)
 {
-    LoRa.setPins(csPin, resetPin, irqPin);
+    LoRa.setPins(CS_PIN, RESET_PIN, IRQ_PIN);
 
-    if (!LoRa.begin(frequency))
+    if (!LoRa.begin(FREQUENCY))
     {
         Serial.println("LoRa initialization failed");
         return false;
@@ -30,16 +30,28 @@ bool LoRaTransmitter::canSendMessage()
 
 String LoRaTransmitter::buildMessage()
 {
-    String finalMessage = "[";
-    for (int i = 0; i < dataArray.size(); i++)
+    String finalMessage = "";
+    for(int i = 0;i < dataArray.size();i++)
     {
-        if (i > 0)
-            finalMessage += ",";
-        finalMessage += jsonFormatter.dataToJson(&dataArray[i]);
+        if(i > 0)
+            finalMessage += ARRAY_SPLIT_CHAR;
+            finalMessage += minifyData(dataArray[i]);
     }
-    finalMessage += "]";
 
     return finalMessage;
+}
+
+String LoRaTransmitter::minifyData(SensorData &data)
+{
+    String finalMessage = "";
+
+    finalMessage += data.name;
+    finalMessage += OBJECT_SPLIT_CHAR + data.unit;
+    finalMessage += OBJECT_SPLIT_CHAR + (String)data.value;
+    finalMessage += OBJECT_SPLIT_CHAR + data.timestamp;
+
+    return finalMessage;
+
 }
 
 bool LoRaTransmitter::sendMessage()

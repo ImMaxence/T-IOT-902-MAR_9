@@ -2,21 +2,29 @@
 #define LORARECEIVER_H
 
 #include <Arduino.h>
+#include <vector>
 #include <LoRa.h>
 #include <ArduinoJson.h>
+#include <SensorData.h>
+
+using namespace std;
 
 #define LORA_SS      18
 #define LORA_RST     14
 #define LORA_DIO0    26
 #define LORA_FREQUENCY 868E6
+#define ARRAY_SPLIT_CHAR '_'
+#define OBJECT_SPLIT_CHAR '|'
 
 class LoRaReceiver {
 private:
     bool initialized;
-    String lastMessage;
+    vector<SensorData> lastMessage;
     
-    void printSensorData(JsonObject sensor);
-    void parseAndDisplayJSON(String jsonString);
+    void printSensorData();
+    vector<SensorData> decodeMessage(String& encodedMessage);
+    vector<String> splitMessageArray(String& encodedMessage);
+    SensorData parseObject(String& object);
 
 public:
     LoRaReceiver();

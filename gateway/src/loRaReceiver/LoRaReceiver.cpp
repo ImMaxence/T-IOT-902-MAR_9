@@ -1,14 +1,18 @@
 #include "LoRaReceiver.h"
+#include <vector>
+#include <SensorData.h>
+
+using namespace std;
 
 LoRaReceiver::LoRaReceiver()
 {
     initialized = false;
-    lastMessage = "";
 }
 
 LoRaReceiver::~LoRaReceiver()
 {
 }
+
 bool LoRaReceiver::begin()
 {
     Serial.println("Initialisation du récepteur");
@@ -27,7 +31,7 @@ bool LoRaReceiver::begin()
     LoRa.enableCrc();
 
     initialized = true;
-    Serial.println("Récepteur LoRa (Heltec WiFi LoRa 32 V2) initialisé avec succès!");
+    Serial.println("Récepteur initialisé avec succès");
 
     return true;
 }
@@ -60,127 +64,118 @@ String LoRaReceiver::receive()
         Serial.print("Contenu: ");
         Serial.println(message);
         Serial.println("-------------------");
-
-        lastMessage = message;
     }
 
     return message;
 }
 
-void LoRaReceiver::parseAndDisplayJSON(String jsonString)
+vector<SensorData> LoRaReceiver::decodeMessage(String &encodedMessage)
 {
-    // Création du document JSON avec une taille appropriée
-    DynamicJsonDocument doc(2048);
+    vector<SensorData> result;
+    vector<String> parsedData = splitMessageArray(encodedMessage);
 
-    // Tentative de parsing du JSON
-    DeserializationError error = deserializeJson(doc, jsonString);
-
-    if (error)
+    for (int i = 0; i < parsedData.size(); i++)
     {
-        Serial.println("❌ ERREUR DE PARSING JSON:");
-        Serial.print("Code d'erreur: ");
-        Serial.println(error.c_str());
-        return;
+        result.push_back(parseObject(parsedData[i]));
     }
 
-    Serial.println("✅ JSON VALIDE - DONNÉES REÇUES:");
-
-    // Vérification que c'est un tableau
-    if (!doc.is<JsonArray>())
-    {
-        Serial.println("❌ Le JSON n'est pas un tableau!");
-        return;
-    }
-
-    JsonArray sensors = doc.as<JsonArray>();
-    Serial.print("Nombre de capteurs: ");
-    Serial.println(sensors.size());
-    Serial.println();
-
-    // Parcours et affichage de chaque capteur
-    int sensorIndex = 1;
-    for (JsonObject sensor : sensors)
-    {
-        Serial.print("--- CAPTEUR ");
-        Serial.print(sensorIndex++);
-        Serial.println(" ---");
-        printSensorData(sensor);
-        Serial.println();
-    }
-
-    Serial.println("===============================\n");
+    return result;
 }
 
-void LoRaReceiver::printSensorData(JsonObject sensor)
+vector<String> LoRaReceiver::splitMessageArray(String &encodedMessage)
 {
-    // Vérification et affichage de chaque champ
-    if (sensor.containsKey("name"))
-    {
-        Serial.print("📊 Nom: ");
-        Serial.println(sensor["name"].as<String>());
-    }
-    else
-    {
-        Serial.println("⚠️  Champ 'name' manquant");
-    }
+    vector<String> parsedData;
+    String dataObject = "";
 
-    if (sensor.containsKey("value"))
+    for (size_t i = 0; i < encodedMessage.length(); i++)
     {
-        Serial.print("📈 Valeur: ");
-        if (sensor["value"].is<int>())
+        if (encodedMessage[i] == ARRAY_SPLIT_CHAR)
         {
-            Serial.println(sensor["value"].as<int>());
-        }
-        else if (sensor["value"].is<float>())
-        {
-            Serial.println(sensor["value"].as<float>(), 2);
+            parsedData.push_back(dataObject);
+            dataObject = "";
         }
         else
         {
-            Serial.println(sensor["value"].as<String>());
+            dataObject += encodedMessage[i];
         }
     }
-    else
-    {
-        Serial.println("⚠️  Champ 'value' manquant");
-    }
 
-    if (sensor.containsKey("unit"))
-    {
-        Serial.print("📏 Unité: ");
-        Serial.println(sensor["unit"].as<String>());
-    }
-    else
-    {
-        Serial.println("⚠️  Champ 'unit' manquant");
-    }
+    parsedData.push_back(dataObject);
 
-    if (sensor.containsKey("timestamp"))
-    {
-        Serial.print("🕒 Timestamp: ");
-        Serial.println(sensor["timestamp"].as<unsigned long>());
+    return parsedData;
+}
 
-        // Conversion en temps relatif (optionnel)
-        unsigned long currentTime = millis();
-        unsigned long messageTime = sensor["timestamp"].as<unsigned long>();
-        if (currentTime > messageTime)
+SensorData LoRaReceiver::parseObject(String &object)
+{
+    SensorData result;
+    vector<String> splittedObject;
+    String encodedObject = "";
+
+    for (size_t i = 0; i < object.length(); i++)
+    {
+        if (object[i] == OBJECT_SPLIT_CHAR)
         {
-            Serial.print("   (il y a ");
-            Serial.print(currentTime - messageTime);
-            Serial.println(" ms)");
+            splittedObject.push_back(object);
+            object = "";
+        }
+        else
+        {
+            object += object[i];
         }
     }
-    else
+
+    result.name = splittedObject[0];
+    result.value = splittedObject[1].toFloat();
+    result.unit = splittedObject[2];
+    result.timestamp = splittedObject[3].toInt();
+
+    return result;
+}
+
+void LoRaReceiver::printSensorData()
+{
+    Serial.println("***********************************");
+    Serial.print("Taille du message :");
+    Serial.print(lastMessage.size());
+    Serial.println(" données");
+    Serial.println("----------------------");
+
+    if (lastMessage.size() < 1)
     {
-        Serial.println("⚠️  Champ 'timestamp' manquant");
+        return;
     }
+
+    Serial.println("Contenu du message");
+    for (int i = 0; i < lastMessage.size(); i++)
+    {
+        Serial.print("Donnée ");
+        Serial.print(i);
+        Serial.println(" :");
+        Serial.print("Nom du capteur : ");
+        Serial.println(lastMessage[i].name);
+        Serial.print("Valeur         : ");
+        Serial.println(lastMessage[i].value);
+        Serial.print("Unité          : ");
+        Serial.println(lastMessage[i].unit);
+        Serial.print("Timestamp      : ");
+        Serial.println(lastMessage[i].timestamp);
+        Serial.println("----------------------");
+    }
+
+    Serial.println("***********************************");
 }
 
 void LoRaReceiver::loop()
 {
+    String encodedMessage = "";
+
     if (isAvailable())
     {
-        receive();
+        encodedMessage = receive();
     }
-}
 
+    if (encodedMessage == "")
+        return;
+
+    vector<SensorData> decodedMessage = decodeMessage(encodedMessage);
+}
