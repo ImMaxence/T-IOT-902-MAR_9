@@ -18,7 +18,7 @@ void setup()
   Wire.begin(21, 22);
   Serial.println("▶ setup démarré");
 
-  // loRaTransmitter.begin(3000);
+  loRaTransmitter.begin(3000);
   gpsSensor.setup();
   temperatureSensor.setup();
 }
@@ -27,9 +27,9 @@ void loop()
 {
   temperatureSensor.readSensorData();
   gpsSensor.readSensorData();
-  // if (loRaTransmitter.canSendMessage())
-  // {
-  //   Serial.println(loRaTransmitter.sendMessage() ? "message envoyé" : "error");
-  // }
+  if (loRaTransmitter.canSendMessage())
+  {
+    Serial.println(loRaTransmitter.sendMessage() ? "-----------message envoyé-----------" : "-----------error lors de l'envoi-----------");
+  }
   delay(1000);
 }

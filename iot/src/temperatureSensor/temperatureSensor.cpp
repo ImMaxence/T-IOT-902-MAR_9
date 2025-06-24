@@ -43,9 +43,9 @@ void TemperatureSensor::readSensorData()
   loRaTransmitter.addData(pressData);
   loRaTransmitter.addData(altData);
 
-  printSensorData(tempData);
-  printSensorData(pressData);
-  printSensorData(altData);
+  // printSensorData(tempData);
+  // printSensorData(pressData);
+  // printSensorData(altData);
 
-  Serial.println("------");
+  // Serial.println("------");
 }

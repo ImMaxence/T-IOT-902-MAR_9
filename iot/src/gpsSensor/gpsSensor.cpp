@@ -22,7 +22,6 @@ void GPSSensor::setup() {
 void GPSSensor::readSensorData() {
   while (gpsSerial.available() > 0) {
     char c = gpsSerial.read();
-    Serial.write(c); // Trame NMEA brute
     gps.encode(c);
   }
 
@@ -35,8 +34,8 @@ void GPSSensor::readSensorData() {
     loRaTransmitter.addData(gpsLat);
     loRaTransmitter.addData(gpsLng);
 
-    printSensorDataGps(gpsLat);
-    printSensorDataGps(gpsLng);
+    // printSensorDataGps(gpsLat);
+    // printSensorDataGps(gpsLng);
   } else {
     Serial.println("🔎 Recherche de satellites...");
   }
