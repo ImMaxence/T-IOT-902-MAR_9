@@ -1,6 +1,6 @@
-#include "LoRaReceiver.h"
+#include "loRaReceiver/loRaReceiver.h"
 #include <vector>
-#include <SensorData.h>
+#include <sensorData/sensorData.h>
 
 using namespace std;
 

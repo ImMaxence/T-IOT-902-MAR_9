@@ -5,7 +5,7 @@
 #include <vector>
 #include <LoRa.h>
 #include <ArduinoJson.h>
-#include <SensorData.h>
+#include <sensorData/sensorData.h>
 
 using namespace std;
 

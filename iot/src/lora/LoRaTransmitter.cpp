@@ -31,11 +31,11 @@ bool LoRaTransmitter::canSendMessage()
 String LoRaTransmitter::buildMessage()
 {
     String finalMessage = "";
-    for(int i = 0;i < dataArray.size();i++)
+    for (int i = 0; i < dataArray.size(); i++)
     {
-        if(i > 0)
+        if (i > 0)
             finalMessage += ARRAY_SPLIT_CHAR;
-            finalMessage += minifyData(dataArray[i]);
+        finalMessage += minifyData(dataArray[i]);
     }
 
     return finalMessage;
@@ -51,7 +51,35 @@ String LoRaTransmitter::minifyData(SensorData &data)
     finalMessage += OBJECT_SPLIT_CHAR + data.timestamp;
 
     return finalMessage;
+}
 
+void LoRaTransmitter::printMessage(String &message)
+{
+    String row = "";
+
+    Serial.println("-------------------");
+    Serial.println(message);
+    Serial.println("Sending: ");
+
+    for (int i = 0; i < message.length(); i++)
+    {
+        if (message[i] == ARRAY_SPLIT_CHAR)
+        {
+            Serial.println(row);
+            row = "";
+        }
+        else
+        {
+            row += message[i];
+        }
+    }
+
+    if (row.length() > 0)
+    {
+        Serial.println(row);
+    }
+
+    Serial.println("-------------------");
 }
 
 bool LoRaTransmitter::sendMessage()
@@ -64,10 +92,7 @@ bool LoRaTransmitter::sendMessage()
 
     lastSendTime = millis();
     dataArray.clear();
-    Serial.println("-------------------");
-    Serial.println("Sending: ");
-    Serial.println(fullMessage);
-    Serial.println("-------------------");
+    printMessage(fullMessage);
 
     return hasSucceeded;
 }

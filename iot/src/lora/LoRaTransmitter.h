@@ -28,5 +28,6 @@ private:
     vector<SensorData> dataArray;
 
     String buildMessage();
+    void printMessage(String &message);
     String minifyData(SensorData &data);
 };

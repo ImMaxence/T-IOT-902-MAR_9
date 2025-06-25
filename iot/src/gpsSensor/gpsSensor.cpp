@@ -37,6 +37,6 @@ void GPSSensor::readSensorData() {
     // printSensorDataGps(gpsLat);
     // printSensorDataGps(gpsLng);
   } else {
-    Serial.println("🔎 Recherche de satellites...");
+    // Serial.println("🔎 Recherche de satellites...");
   }
 }
