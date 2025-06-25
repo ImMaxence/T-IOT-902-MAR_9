@@ -2,7 +2,6 @@
 #define HTTPS_TRANSMITTER_H
 
 #include <Arduino.h>
-#include <sensorData/sensorData.h>
 #include <vector>
 #include <WiFi.h>
 #include <HTTPClient.h>

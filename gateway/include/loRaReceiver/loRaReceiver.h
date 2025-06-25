@@ -21,7 +21,6 @@ private:
     bool initialized;
     vector<SensorData> lastMessage;
     
-    void printSensorData();
     vector<SensorData> decodeMessage(String& encodedMessage);
     vector<String> splitMessageArray(String& encodedMessage);
     SensorData parseObject(String& object);

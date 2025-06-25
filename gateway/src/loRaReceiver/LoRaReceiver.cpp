@@ -132,39 +132,6 @@ SensorData LoRaReceiver::parseObject(String &object)
     return result;
 }
 
-void LoRaReceiver::printSensorData()
-{
-    Serial.println("***********************************");
-    Serial.print("Taille du message :");
-    Serial.print(lastMessage.size());
-    Serial.println(" données");
-    Serial.println("----------------------");
-
-    if (lastMessage.size() < 1)
-    {
-        return;
-    }
-
-    Serial.println("Contenu du message");
-    for (int i = 0; i < lastMessage.size(); i++)
-    {
-        Serial.print("Donnée ");
-        Serial.print(i);
-        Serial.println(" :");
-        Serial.print("Nom du capteur : ");
-        Serial.println(lastMessage[i].name);
-        Serial.print("Valeur         : ");
-        Serial.println(lastMessage[i].value);
-        Serial.print("Unité          : ");
-        Serial.println(lastMessage[i].unit);
-        Serial.print("Timestamp      : ");
-        Serial.println(lastMessage[i].timestamp);
-        Serial.println("----------------------");
-    }
-
-    Serial.println("***********************************");
-}
-
 void LoRaReceiver::loop()
 {
     String encodedMessage = "";

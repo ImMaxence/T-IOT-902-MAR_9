@@ -19,10 +19,9 @@ String HttpsTransmitter::buildMessage(String message)
   DynamicJsonDocument doc(1024);
   JsonArray array = doc.to<JsonArray>();
 
-  String objectsStr[100]; // Tableau pour stocker les objets
+  String objectsStr[100];
   int numObjects = 0;
 
-  // Séparer les objets
   int start = 0;
   while (true)
   {
@@ -36,7 +35,6 @@ String HttpsTransmitter::buildMessage(String message)
     start = end + 1;
   }
 
-  // Créer les objets JSON
   for (int i = 0; i < numObjects; i++)
   {
     JsonObject obj = array.createNestedObject();
@@ -89,7 +87,6 @@ bool HttpsTransmitter::sendMessage(String &message)
 
   https.begin(wifiClient, HTTPS_SERVER_URL);
   wifiClient.setInsecure();
-  // wifiClient.setCACert(HTTPS_ROOT_CA_CERTIFICATE);
 
   https.addHeader("Content-Type", "application/json");
   int httpResponseCode = https.POST(jsonStr);
