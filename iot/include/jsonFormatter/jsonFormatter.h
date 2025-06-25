@@ -1,4 +1,4 @@
-#include <SensorData.h>
+#include "sensorData/sensorData.h"
 #include <Arduino.h>
 
 class JsonFormatter

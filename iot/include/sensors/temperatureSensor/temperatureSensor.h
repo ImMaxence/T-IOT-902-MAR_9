@@ -2,7 +2,7 @@
 #define TEMPERATURE_H
 
 #include <Adafruit_BMP280.h>
-#include "SensorData.h"
+#include "sensorData/sensorData.h"
 
 class TemperatureSensor {
 public:

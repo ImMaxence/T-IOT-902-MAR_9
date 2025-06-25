@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "SensorData.h"
+#include "sensorData/sensorData.h"
 #include <vector>
-#include "../utils/JsonFormatter.h"
+#include "jsonFormatter/jsonFormatter.h"
 
 using namespace std;
 

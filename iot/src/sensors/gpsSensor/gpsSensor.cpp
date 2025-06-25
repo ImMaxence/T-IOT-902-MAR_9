@@ -1,5 +1,5 @@
-#include "gpsSensor/gpsSensor.h"
-#include "lora/LoRaInstance.h"
+#include "sensors/gpsSensor/gpsSensor.h"
+#include "loRa/loRaInstance/loRaInstance.h"
 
 GPSSensor::GPSSensor() : gpsSerial(1) {}
 

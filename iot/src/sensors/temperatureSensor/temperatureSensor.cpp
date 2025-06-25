@@ -1,5 +1,5 @@
-#include "temperatureSensor/temperatureSensor.h"
-#include "lora/LoRaInstance.h"
+#include "sensors/temperatureSensor/temperatureSensor.h"
+#include "loRa/loRaInstance/loRaInstance.h"
 
 TemperatureSensor::TemperatureSensor() {}
 

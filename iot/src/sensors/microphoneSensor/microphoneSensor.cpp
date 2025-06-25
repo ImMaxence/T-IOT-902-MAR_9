@@ -1,5 +1,5 @@
-#include "microphoneSensor/microphoneSensor.h"
-#include "lora/LoRaInstance.h"
+#include "sensors/microphoneSensor/microphoneSensor.h"
+#include "loRa/loRaInstance/loRaInstance.h"
 
 const float MicrophoneSensor::CALIBRATION_OFFSET = 120.0f;
 const int MicrophoneSensor::BITS_SHIFT_SPH0645 = 8;

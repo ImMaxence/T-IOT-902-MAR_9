@@ -1,11 +1,10 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include "./lora/LoRaTransmitter.h"
-#include "./sensorExample/SensorExample.h"
-#include "SensorData.h"
-#include "temperatureSensor/temperatureSensor.h"
-#include "gpsSensor/gpsSensor.h"
-#include "microphoneSensor/microphoneSensor.h"
+#include "./loRa/loRaTransmitter/loRaTransmitter.h"
+#include "sensorData/sensorData.h"
+#include "sensors/temperatureSensor/temperatureSensor.h"
+#include "sensors/gpsSensor/gpsSensor.h"
+#include "sensors/microphoneSensor/microphoneSensor.h"
 
 LoRaTransmitter loRaTransmitter;
 

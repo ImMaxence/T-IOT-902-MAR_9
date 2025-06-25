@@ -2,7 +2,7 @@
 #define MICROPHONESENSOR_H
 
 #include <Arduino.h>
-#include "SensorData.h"
+#include "sensorData/sensorData.h"
 #include <driver/i2s.h>
 #include <cmath>
 

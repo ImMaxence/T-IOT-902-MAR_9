@@ -2,7 +2,7 @@
 #define GPS_H
 
 #include <TinyGPS++.h>
-#include "SensorData.h"
+#include "sensorData/sensorData.h"
 
 class GPSSensor {
 public:

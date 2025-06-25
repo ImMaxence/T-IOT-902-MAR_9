@@ -1,4 +1,4 @@
-#include "LoRaTransmitter.h"
+#include "loRa/loRaTransmitter/loRaTransmitter.h"
 #include "LoRa.h"
 
 LoRaTransmitter::LoRaTransmitter()
