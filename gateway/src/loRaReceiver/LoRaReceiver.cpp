@@ -89,7 +89,7 @@ vector<String> LoRaReceiver::splitMessageArray(String &encodedMessage)
 
     for (size_t i = 0; i < encodedMessage.length(); i++)
     {
-        if (encodedMessage[i] == ARRAY_SPLIT_CHAR)
+        if (encodedMessage[i] == (char)ARRAY_SPLIT_CHAR)
         {
             parsedData.push_back(dataObject);
             dataObject = "";
@@ -113,7 +113,7 @@ SensorData LoRaReceiver::parseObject(String &object)
 
     for (size_t i = 0; i < object.length(); i++)
     {
-        if (object[i] == OBJECT_SPLIT_CHAR)
+        if (object[i] == (char)OBJECT_SPLIT_CHAR)
         {
             splittedObject.push_back(object);
             object = "";
