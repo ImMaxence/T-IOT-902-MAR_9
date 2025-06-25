@@ -6,16 +6,6 @@
 #include <driver/i2s.h>
 #include <cmath>
 
-// Configuration I2S pour SPH0645
-#define I2S_NUM_MIC         I2S_NUM_0
-#define I2S_SAMPLE_RATE     16000
-#define I2S_BUFFER_SIZE     512
-
-// Pins selon votre schéma
-#define I2S_BCLK_PIN        13  // Bit Clock
-#define I2S_LRC_PIN         14  // Left/Right Clock
-#define I2S_DOUT_PIN        33  // Data Out
-
 class MicrophoneSensor {
 public:
     MicrophoneSensor();

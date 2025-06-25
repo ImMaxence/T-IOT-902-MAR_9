@@ -7,9 +7,9 @@ LoRaTransmitter::LoRaTransmitter()
 
 bool LoRaTransmitter::begin(unsigned long delayBetweenMessages)
 {
-    LoRa.setPins(CS_PIN, RESET_PIN, IRQ_PIN);
+    LoRa.setPins(LORA_CS_PIN, LORA_RESET_PIN, LORA_IRQ_PIN);
 
-    if (!LoRa.begin(FREQUENCY))
+    if (!LoRa.begin(LORA_FREQUENCY))
     {
         Serial.println("LoRa initialization failed");
         return false;
@@ -34,7 +34,7 @@ String LoRaTransmitter::buildMessage()
     for (int i = 0; i < dataArray.size(); i++)
     {
         if (i > 0)
-            finalMessage += ARRAY_SPLIT_CHAR;
+            finalMessage += (char)ARRAY_SPLIT_CHAR;
         finalMessage += minifyData(dataArray[i]);
     }
 
@@ -46,9 +46,9 @@ String LoRaTransmitter::minifyData(SensorData &data)
     String finalMessage = "";
 
     finalMessage += data.name;
-    finalMessage += OBJECT_SPLIT_CHAR + data.unit;
-    finalMessage += OBJECT_SPLIT_CHAR + (String)data.value;
-    finalMessage += OBJECT_SPLIT_CHAR + data.timestamp;
+    finalMessage += (char)OBJECT_SPLIT_CHAR + data.unit;
+    finalMessage += (char)OBJECT_SPLIT_CHAR + (String)data.value;
+    finalMessage += (char)OBJECT_SPLIT_CHAR + data.timestamp;
 
     return finalMessage;
 }
@@ -63,7 +63,7 @@ void LoRaTransmitter::printMessage(String &message)
 
     for (int i = 0; i < message.length(); i++)
     {
-        if (message[i] == ARRAY_SPLIT_CHAR)
+        if (message[i] == (char)ARRAY_SPLIT_CHAR)
         {
             Serial.println(row);
             row = "";

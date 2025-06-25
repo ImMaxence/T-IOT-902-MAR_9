@@ -76,10 +76,10 @@ bool MicrophoneSensor::initializeI2S() {
     };
 
     i2s_pin_config_t pin_config = {
-        .bck_io_num = I2S_BCLK_PIN,
-        .ws_io_num = I2S_LRC_PIN,
+        .bck_io_num = MICROPHONE_I2S_BCLK_PIN,
+        .ws_io_num = MICROPHONE_I2S_LRC_PIN,
         .data_out_num = I2S_PIN_NO_CHANGE,
-        .data_in_num = I2S_DOUT_PIN
+        .data_in_num = MICROPHONE_I2S_DOUT_PIN
     };
 
     esp_err_t ret = i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
@@ -106,11 +106,11 @@ float MicrophoneSensor::readAmplitude()
     if (!initialized)
         return 0.0f;
 
-    int32_t samples[I2S_BUFFER_SIZE];
+    int32_t samples[MICROPHONE_I2S_BUFFER_SIZE];
     size_t bytesRead = 0; // ✅ Variable
 
     // ✅ Passer l'adresse de bytesRead
-    esp_err_t result = i2s_read(I2S_NUM_MIC, samples, sizeof(samples), &bytesRead, 1000);
+    esp_err_t result = i2s_read(I2S_NUM_0, samples, sizeof(samples), &bytesRead, 1000);
 
     if (result != ESP_OK || bytesRead == 0)
     {

@@ -4,9 +4,6 @@
 #include <TinyGPS++.h>
 #include "sensorData/sensorData.h"
 
-#define RX_PIN 34
-#define TX_PIN 12
-
 class GPSSensor {
 public:
   GPSSensor();

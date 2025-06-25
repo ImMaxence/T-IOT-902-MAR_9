@@ -15,7 +15,7 @@ void GPSSensor::printSensorDataGps(SensorData data) {
 }
 
 void GPSSensor::setup() {
-  gpsSerial.begin(9600, SERIAL_8N1, RX_PIN, TX_PIN);
+  gpsSerial.begin(9600, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN);
   Serial.println("🛰️ Initialisation du GPS...");
 }
 

@@ -5,13 +5,6 @@
 
 using namespace std;
 
-#define CS_PIN 18
-#define IRQ_PIN 14
-#define RESET_PIN 26
-#define FREQUENCY 868E6
-#define ARRAY_SPLIT_CHAR '_'
-#define OBJECT_SPLIT_CHAR '|'
-
 class LoRaTransmitter
 {
 public:
