@@ -42,3 +42,11 @@ jobs:
       - name: List build directory
         run: ls -al .pio/build/ttgo-t-beam/
         working-directory: iot
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.0
+          name: "Release v1.0.0"
+          files: iot/.pio/build/ttgo-t-beam/firmware.bin
+
