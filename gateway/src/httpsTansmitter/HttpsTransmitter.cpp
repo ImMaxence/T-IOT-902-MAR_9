@@ -25,7 +25,7 @@ String HttpsTransmitter::buildMessage(String message)
   int start = 0;
   while (true)
   {
-    int end = message.indexOf('_', start);
+    int end = message.indexOf((char)ARRAY_SPLIT_CHAR, start);
     if (end == -1)
     {
       objectsStr[numObjects++] = message.substring(start);
@@ -45,7 +45,7 @@ String HttpsTransmitter::buildMessage(String message)
     String keys[] = {"name", "unit", "value"};
     while (true)
     {
-      int end = valuesStr.indexOf('|', start);
+      int end = valuesStr.indexOf((char)OBJECT_SPLIT_CHAR, start);
       if (end == -1)
       {
         obj[keys[j]] = valuesStr.substring(start).toFloat();
