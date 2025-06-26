@@ -1,4 +1,4 @@
-# Sensor Sensi
+# Sensor Sensei
 
 - [Le projet](#le-projet)
 - [Architecture](#architecture)
@@ -14,8 +14,8 @@
   * [Configuration](#configuration)
 - [Flashage des binaires](#flashage-des-binaires)
   * [Prérequis](#pr-requis)
-    + [Utilisation](#utilisation)
-      - [Pour Heltec WiFi LoRa 32 V2](#pour-heltec-wifi-lora-32-v2)
+  * [Utilisation](#utilisation)
+    + [Pour Heltec WiFi LoRa 32 V2](#pour-heltec-wifi-lora-32-v2)
     + [Pour TTGO T-Beam](#pour-ttgo-t-beam)
 - [Installation](#installation)
   * [API REST](#api-rest)
@@ -121,9 +121,9 @@ Le projet contient 3 fichiers de configuration :
 - **esptool.py** : `pip install esptool`
 - **Cable USB** connecté à votre carte
 
-#### Utilisation
+### Utilisation
 
-##### Pour Heltec WiFi LoRa 32 V2
+#### Pour Heltec WiFi LoRa 32 V2
 ```bash
 # Identifiez le port série (généralement /dev/ttyUSB0 sur Linux/Mac, COM3 sur Windows)
 esptool.py --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard_reset write_flash 0x10000 gateway_YYYYMMDD_HHMMSS.bin
