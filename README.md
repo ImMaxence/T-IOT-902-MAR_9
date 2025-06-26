@@ -7,12 +7,12 @@
     + [Technologies](#technologies)
     + [Outils de développement](#outils-de-d-veloppement)
     + [Dépendances du firmware](#d-pendances-du-firmware)
-  * [Schéma de câblage](#sch-ma-de-c-blage)
   * [Documentation](#documentation)
+    + [Schéma de câblage](#sch-ma-de-c-blage)
     + [Format de données](#format-de-donn-es)
       - [Transmission LoRa](#transmission-lora)
       - [Transmission HTTPS](#transmission-https)
-  * [Configuration](#configuration)
+    + [Configuration](#configuration)
   * [Installation](#installation)
     + [API REST](#api-rest)
       - [Prérequis](#pr-requis)
@@ -65,11 +65,11 @@ Le projet utilise les technologies suivantes :
 - mikalhart/TinyGPSPlus@^1.0.3
 - adafruit/Adafruit BMP280 Library
 
-## Schéma de câblage
+## Documentation
+
+### Schéma de câblage
 
 ![Schéma de câblage du système IoT LoRa](documentation/schema_cablage.png)
-
-## Documentation
 
 ### Format de données
 
@@ -102,7 +102,7 @@ Les Séparateurs sont configurables dans les fichiers config.ini.
 ]
 ```
 
-## Configuration
+### Configuration
 
 Le projet contient 3 fichiers de configuration :
 - `/iot/config.ini` : contient toute la configuration de l'émetteur LoRa et des capteurs
