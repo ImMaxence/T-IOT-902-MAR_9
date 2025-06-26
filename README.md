@@ -1,17 +1,24 @@
-# Sensor Sensei
+# Sensor Sensi
 
-- [Sensor Sensei](#sensor-sensei)
+-[Sensor Sensi](#sensor-sensi)
   * [Le projet](#le-projet)
   * [Architecture](#architecture)
-  * [Technologies](#technologies)
+  * [Développement](#d-veloppement)
+    + [Technologies](#technologies)
+    + [Outils de développement](#outils-de-d-veloppement)
+    + [Dépendances du firmware](#d-pendances-du-firmware)
   * [Schéma de câblage](#sch-ma-de-c-blage)
-  * [Format de données](#format-de-donn-es)
-    + [Transmission LoRa](#transmission-lora)
-    + [Transmission HTTPS](#transmission-https)
+  * [Documentation](#documentation)
+    + [Format de données](#format-de-donn-es)
+      - [Transmission LoRa](#transmission-lora)
+      - [Transmission HTTPS](#transmission-https)
   * [Configuration](#configuration)
   * [Installation](#installation)
     + [API REST](#api-rest)
+      - [Prérequis](#pr-requis)
     + [IoT](#iot)
+      - [Prérequis](#pr-requis-1)
+      - [Installation](#installation-1)
 
 ## Le projet
 
@@ -35,7 +42,9 @@ Voici l'architecture détaillée du projet :
 
 ![Diagramme de séquence du système IoT LoRa](documentation/diagramme_sequence.png)
 
-## Technologies
+## Développement
+
+### Technologies
 
 Le projet utilise les technologies suivantes :
 - **C++** pour les firmware des émetteurs et de la gateway
@@ -43,13 +52,28 @@ Le projet utilise les technologies suivantes :
 - **PostgreSQL** pour le stockage de données temporelles
 - **Grafana** pour l'interface de monitoring web
 
+### Outils de développement
+
+- VSCode avec PlatformIO pour le développement des firmwares
+- GitHub Actions pour l'intégration continue.
+- Docker pour déployer l'API
+
+### Dépendances du firmware
+
+- sandeepmistry/LoRa@^0.8.0
+- bblanchon/ArduinoJson@^7.4.1
+- mikalhart/TinyGPSPlus@^1.0.3
+- adafruit/Adafruit BMP280 Library
+
 ## Schéma de câblage
 
 ![Schéma de câblage du système IoT LoRa](documentation/schema_cablage.png)
 
-## Format de données
+## Documentation
 
-### Transmission LoRa
+### Format de données
+
+#### Transmission LoRa
 
 **Format de base** :
 
@@ -60,7 +84,7 @@ Le projet utilise les technologies suivantes :
 
 Les Séparateurs sont configurables dans les fichiers config.ini.
 
-### Transmission HTTPS
+#### Transmission HTTPS
 
 **Format de base (JSON)** :
 ```json
@@ -88,6 +112,13 @@ Le projet contient 3 fichiers de configuration :
 ## Installation
 
 ### API REST
+
+#### Prérequis
+
+`npm`: [Accéder à la documentation officelle](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+####Installation
+
     cd backend2
     docker-compose up -d
 
@@ -98,6 +129,12 @@ ou
     npm start`
 
 ### IoT
+
+#### Prérequis
+
+`platformio` : [Accéder à la documentation officelle](https://docs.platformio.org/en/latest/core/installation/index.html)
+
+#### Installation
 
     chmod +x start.sh
     ./start.sh
