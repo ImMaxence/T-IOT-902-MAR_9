@@ -42,15 +42,3 @@ jobs:
       - name: List build directory
         run: ls -al .pio/build/ttgo-t-beam/
         working-directory: iot
-
-      - name: Create GitHub Release
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: "v1.0.0"
-          prerelease: false
-          title: "Release v1.0.0"
-          files: |
-            iot/.pio/build/ttgo-t-beam/firmware.bin
-
-
