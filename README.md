@@ -1,23 +1,29 @@
 # Sensor Sensi
 
-  * [Le projet](#le-projet)
-  * [Architecture](#architecture)
-  * [Développement](#d-veloppement)
-    + [Technologies](#technologies)
-    + [Outils de développement](#outils-de-d-veloppement)
-    + [Dépendances du firmware](#d-pendances-du-firmware)
-  * [Documentation](#documentation)
-    + [Schéma de câblage](#sch-ma-de-c-blage)
-    + [Format de données](#format-de-donn-es)
-      - [Transmission LoRa](#transmission-lora)
-      - [Transmission HTTPS](#transmission-https)
-    + [Configuration](#configuration)
-  * [Installation](#installation)
-    + [API REST](#api-rest)
-      - [Prérequis](#pr-requis)
-    + [IoT](#iot)
-      - [Prérequis](#pr-requis-1)
-      - [Installation](#installation-1)
+- [Le projet](#le-projet)
+- [Architecture](#architecture)
+- [Développement](#d-veloppement)
+  * [Technologies](#technologies)
+  * [Outils de développement](#outils-de-d-veloppement)
+  * [Dépendances du firmware](#d-pendances-du-firmware)
+- [Documentation](#documentation)
+  * [Schéma de câblage](#sch-ma-de-c-blage)
+  * [Format de données](#format-de-donn-es)
+    + [Transmission LoRa](#transmission-lora)
+    + [Transmission HTTPS](#transmission-https)
+  * [Configuration](#configuration)
+- [Flashage des binaires](#flashage-des-binaires)
+  * [Prérequis](#pr-requis)
+    + [Utilisation](#utilisation)
+      - [Pour Heltec WiFi LoRa 32 V2](#pour-heltec-wifi-lora-32-v2)
+    + [Pour TTGO T-Beam](#pour-ttgo-t-beam)
+- [Installation](#installation)
+  * [API REST](#api-rest)
+    + [Prérequis](#pr-requis-1)
+  * [IoT](#iot)
+    + [Prérequis](#pr-requis-2)
+    + [Installation](#installation-1)
+
 
 ## Le projet
 
@@ -107,6 +113,27 @@ Le projet contient 3 fichiers de configuration :
 - `/iot/config.ini` : contient toute la configuration de l'émetteur LoRa et des capteurs
 - `/gateway/config.ini` : contient la configuration du récpteur LoRa et de l'émetteur HTTPS
 - `/gateway/secrets.ini` : contient les identifiants pour connecter la gateway au WiFi
+
+## Flashage des binaires
+
+### Prérequis
+- **Python** installé
+- **esptool.py** : `pip install esptool`
+- **Cable USB** connecté à votre carte
+
+#### Utilisation
+
+##### Pour Heltec WiFi LoRa 32 V2
+```bash
+# Identifiez le port série (généralement /dev/ttyUSB0 sur Linux/Mac, COM3 sur Windows)
+esptool.py --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard_reset write_flash 0x10000 gateway_YYYYMMDD_HHMMSS.bin
+```
+
+#### Pour TTGO T-Beam
+```bash
+# Identifiez le port série (généralement /dev/ttyUSB0 sur Linux/Mac, COM3 sur Windows)
+esptool.py --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard_reset write_flash 0x10000 iot_YYYYMMDD_HHMMSS.bin
+```
 
 ## Installation
 
