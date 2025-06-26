@@ -1,6 +1,5 @@
 # Sensor Sensi
 
--[Sensor Sensi](#sensor-sensi)
   * [Le projet](#le-projet)
   * [Architecture](#architecture)
   * [Développement](#d-veloppement)
