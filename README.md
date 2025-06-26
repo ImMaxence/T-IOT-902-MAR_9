@@ -33,7 +33,7 @@ Voici l'architecture détaillée du projet :
 
 **Diagramme de séquence**
 
-![Diagramme de séquence du système IoT LoRa](documentation/diagramme_sensor_sensei.png)
+![Diagramme de séquence du système IoT LoRa](documentation/diagramme_sequence.png)
 
 ## Technologies
 
