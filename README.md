@@ -132,7 +132,7 @@ esptool.py --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard
 #### Pour TTGO T-Beam
 ```bash
 # Identifiez le port série (généralement /dev/ttyUSB0 sur Linux/Mac, COM3 sur Windows)
-esptool.py --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard_reset write_flash 0x10000 iot_YYYYMMDD_HHMMSS.bin
+esptool.py --port /dev/ttyUSB0 --before default_reset --after hard_reset write_flash 0x10000 iot_YYYYMMDD_HHMMSS.bin
 ```
 
 ## Installation
