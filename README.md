@@ -165,6 +165,24 @@ ou
     npm install
     npm start`
 
+# 📡 Documentation des routes API
+
+## Préfixe global
+Toutes les routes sont préfixées par : `/api/sensors`
+
+## Routes disponibles
+
+### 1. POST `/api/sensors`
+- **Description** : Recevoir et stocker les données des capteurs, puis relayer à Sensor Community.
+- **Body attendu** : Tableau d’objets `{ name: string, value: number, unit: string, timestamp: integer }`
+- **Réponses** :
+  - `201` : Données enregistrées et relayées
+  - `400` : Mauvais format
+  - `500` : Erreur serveur
+
+### 2. GET `/api/sensors/all`
+- **Description** : Récupérer toutes les données des capteurs stockées.
+
 ### IoT
 
 #### Prérequis
