@@ -12,11 +12,12 @@
     + [Transmission LoRa](#transmission-lora)
     + [Transmission HTTPS](#transmission-https)
   * [Configuration](#configuration)
-- [Flashage des binaires](#flashage-des-binaires)
-  * [Prérequis](#pr-requis)
-  * [Utilisation](#utilisation)
-    + [Pour Heltec WiFi LoRa 32 V2](#pour-heltec-wifi-lora-32-v2)
-    + [Pour TTGO T-Beam](#pour-ttgo-t-beam)
+  * [Flashage des binaires](#flashage-des-binaires)
+    + [Prérequis](#pr-requis)
+    + [Utilisation](#utilisation)
+      - [Pour la gateway](#pour-la-gateway)
+      - [Pour l'IoT](#pour-l-iot)
+  * [Rebuild des binaires](#rebuild-des-binaires)
 - [Installation](#installation)
   * [API REST](#api-rest)
     + [Prérequis](#pr-requis-1)
@@ -114,26 +115,36 @@ Le projet contient 3 fichiers de configuration :
 - `/gateway/config.ini` : contient la configuration du récpteur LoRa et de l'émetteur HTTPS
 - `/gateway/secrets.ini` : contient les identifiants pour connecter la gateway au WiFi
 
-## Flashage des binaires
+### Flashage des binaires
 
-### Prérequis
+#### Prérequis
 - **Python** installé
 - **esptool.py** : `pip install esptool`
 - **Cable USB** connecté à votre carte
 
-### Utilisation
+#### Utilisation
 
-#### Pour Heltec WiFi LoRa 32 V2
+##### Pour la gateway
 ```bash
 # Identifiez le port série (généralement /dev/ttyUSB0 sur Linux/Mac, COM3 sur Windows)
 esptool.py --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard_reset write_flash 0x10000 gateway_YYYYMMDD_HHMMSS.bin
 ```
 
-#### Pour TTGO T-Beam
+##### Pour l'IoT
 ```bash
 # Identifiez le port série (généralement /dev/ttyUSB0 sur Linux/Mac, COM3 sur Windows)
 esptool.py --port /dev/ttyUSB0 --before default_reset --after hard_reset write_flash 0x10000 iot_YYYYMMDD_HHMMSS.bin
 ```
+
+### Rebuild des binaires
+
+Les commandes
+```bash
+chmod +x build_all.sh;
+./build_all.sh
+```
+permettent de générer une nouvelle version de chaque binaire dans le dossier `release`.
+
 
 ## Installation
 
