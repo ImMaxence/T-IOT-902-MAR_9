@@ -33,7 +33,7 @@ void loop()
 
     if (loRaTransmitter.canSendMessage())
     {
-        Serial.println(loRaTransmitter.sendMessage() ? "-----------message envoyé-----------" : "-----------error lors de l'envoi-----------");
+        loRaTransmitter.sendMessage();
     }
-    delay(5000);
+    delay(TRANSMISSION_DELAY);
 }
